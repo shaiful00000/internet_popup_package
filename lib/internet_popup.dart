@@ -22,7 +22,7 @@ class InternetPopup {
   void initialize({required BuildContext context, String? customMessage, String? customDescription, bool? onTapPop = false, Function? onChange}) {
     final navigator = Navigator.of(context);
     _connectivity.checkConnectivity().then((result) async {
-      if (result != ConnectivityResult.none) {
+      if (result.contains(ConnectivityResult.none) == false) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
@@ -47,7 +47,7 @@ class InternetPopup {
     });
 
     _connectivity.onConnectivityChanged.listen((result) async {
-      if (result != ConnectivityResult.none) {
+      if (result.contains(ConnectivityResult.none) == false) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
@@ -80,7 +80,7 @@ class InternetPopup {
     final navigator = Navigator.of(context);
 
     _connectivity.checkConnectivity().then((result) async {
-      if (result != ConnectivityResult.none) {
+      if (result.contains(ConnectivityResult.none) == false) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
@@ -99,7 +99,7 @@ class InternetPopup {
     });
 
     _connectivity.onConnectivityChanged.listen((result) async {
-      if (result != ConnectivityResult.none) {
+      if (result.contains(ConnectivityResult.none) == false) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
@@ -120,8 +120,8 @@ class InternetPopup {
 
   Future<bool> checkInternet() async {
     bool isConnected = false;
-    ConnectivityResult connectivityResult = await _connectivity.checkConnectivity();
-    if (connectivityResult != ConnectivityResult.none) {
+    List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.none) == false) {
       isConnected = await InternetConnectionChecker().hasConnection;
     }
     return isConnected;
@@ -129,9 +129,9 @@ class InternetPopup {
 
   Future<String> getConnectionType() async {
     var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.mobile) {
+    if (connectivityResult.contains(ConnectivityResult.mobile)) {
       return "mobile";
-    } else if (connectivityResult == ConnectivityResult.wifi) {
+    } else if (connectivityResult.contains(ConnectivityResult.wifi)) {
       return "wifi";
     } else {
       return "mobile";
