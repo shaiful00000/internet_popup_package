@@ -2,7 +2,7 @@ library internet_popup;
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:internet_popup/src/custom_dialog.dart';
 
 class InternetPopup {
@@ -23,7 +23,7 @@ class InternetPopup {
     final navigator = Navigator.of(context);
     _connectivity.checkConnectivity().then((result) async {
       if (result.contains(ConnectivityResult.none) == false) {
-        _isOnline = await InternetConnection().hasInternetAccess;
+        _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
@@ -48,7 +48,7 @@ class InternetPopup {
 
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result.contains(ConnectivityResult.none) == false) {
-        _isOnline = await InternetConnection().hasInternetAccess;
+        _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
@@ -81,7 +81,7 @@ class InternetPopup {
 
     _connectivity.checkConnectivity().then((result) async {
       if (result.contains(ConnectivityResult.none) == false) {
-        _isOnline = await InternetConnection().hasInternetAccess;
+        _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
@@ -100,7 +100,7 @@ class InternetPopup {
 
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result.contains(ConnectivityResult.none) == false) {
-        _isOnline = await InternetConnection().hasInternetAccess;
+        _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
@@ -122,7 +122,7 @@ class InternetPopup {
     bool isConnected = false;
     List<ConnectivityResult> connectivityResult = await _connectivity.checkConnectivity();
     if (connectivityResult.contains(ConnectivityResult.none) == false) {
-      isConnected = await InternetConnection().hasInternetAccess;
+      isConnected = await InternetConnectionChecker().hasConnection;
     }
     return isConnected;
   }
